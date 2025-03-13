@@ -1,6 +1,6 @@
 {
   "name": "@pratyushbarik/test-package",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A test package for Lerna publishing",
   "main": "index.js",
   "scripts": {
