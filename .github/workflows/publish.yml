@@ -3,7 +3,7 @@ name: Auto Versioning & Publish
 on:
   push:
     branches:
-      - main  # Runs only when code is merged into main
+      - main  # Runs when a PR is merged into main
 
 permissions:
   contents: write
@@ -28,18 +28,25 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      - name: Authenticate GitHub App
+        id: app-auth
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Configure Git
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "lerna-bot[bot]"
+          git config --global user.email "lerna-bot[bot]@users.noreply.github.com"
 
       - name: Bump Version and Push Changes
         run: |
-          git checkout main  # Ensure we are on the correct branch
+          git checkout main  # Ensure we are on main
           npx lerna version --conventional-commits --yes
           git push origin main
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-auth.outputs.token }}
 
       - name: Publish to GitHub Packages
         run: npx lerna publish from-git --yes
