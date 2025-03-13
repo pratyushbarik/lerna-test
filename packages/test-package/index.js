@@ -1,1 +1,1 @@
-module.exports = 'Hello from test-package!';
+module.exports = "Hello from test-package next version!";
