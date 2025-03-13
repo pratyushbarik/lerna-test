@@ -47,16 +47,17 @@ jobs:
 
       - name: Bump Version and Push Changes
         run: |
-          git checkout main  # Ensure we are on main
+          git checkout main
           npx lerna version --conventional-commits --yes
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+      - name: Push Updated Code
+        run: |
           git push origin main
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-
       - name: Publish to GitHub Packages
         run: npx lerna publish from-git --yes
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
