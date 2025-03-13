@@ -2,6 +2,5 @@
   "packages": ["packages/*"],
   "version": "independent",
   "npmClient": "npm",
-  "useWorkspaces": true,
   "registry": "https://npm.pkg.github.com/pratyushbarik"
 }
