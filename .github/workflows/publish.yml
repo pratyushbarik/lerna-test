@@ -58,8 +58,9 @@ jobs:
           git push origin main
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
+
       - name: Publish to GitHub Packages
         run: npx lerna publish from-git --yes
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
